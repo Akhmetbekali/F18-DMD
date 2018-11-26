@@ -12,7 +12,7 @@ db_password = 'ThisPostgresIsAwesome'
 
 
 class Constants:
-    q1_name = 'Manuel Mazzara'
+    q1_name = 'Joo Lee'
     q1_color = 'white'
     q1_plate = '%AA%'
 
