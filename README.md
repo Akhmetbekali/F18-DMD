@@ -38,8 +38,8 @@ Python requrements for the project
 
 Database chosen for implementation of ER-diagram is PostgreSQL v11.  
 Queries implemented using plain SQL.  
-GUI provided with Dash visualization in main.py file, just run 'python3 main.py' to start the project, install requirements first  
-
+GUI provided with Dash visualization in main.py file, just run 'python3 main.py' to start the project, install requirements first.  
+You may change needed values by selecting them in dropdown menu, entering new data, hitting submit button and reloading query.
 
 Database with data will be available and running till the end of semester with this credentials:
 
