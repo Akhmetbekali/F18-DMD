@@ -8,8 +8,8 @@ from (select avg(sqrt(
                             cast(RIGHT(location_cur, 9) as double precision)), 2))) as average_distance
       from orders as o,
            cars as c
-      where c.car_id = o.car_id) as distance,
+      where c.car_id = o.car_id and o.date::date_from = (%s)) as distance,
      (select age(date_to, date_from) as average_trip_duration
       from orders
-      where date_to is not null
+      where o.date::date_from = (%s) and date_to is not null
       limit 1) as duration;

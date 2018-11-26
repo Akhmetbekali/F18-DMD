@@ -2,5 +2,5 @@
 select t.date
 from transactions as t,
      customers as c
-where name = 'Manuel Mazzara'
+where name = (%s)
   AND t.type = 'Charge';
