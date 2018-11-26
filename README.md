@@ -53,7 +53,7 @@ Database with data will be available and running till the end of semester with t
 | password | ThisPostgresIsAwesome |
 
 
-And the GUI will be awailable on **gleb.page:8050**
+And the GUI will be awailable on **https://dmd.gleb.page**
 
 If it fails, write Gleb to deploy it again.
 
