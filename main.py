@@ -60,17 +60,17 @@ class Constants:
         if constant == 'q1_n':
             Constants.q1_name = value
         if constant == 'q1_c':
-            Constants.q1_name = value
+            Constants.q1_color = value
         if constant == 'q1_p':
-            Constants.q1_name = value
+            Constants.q1_plate = value
         if constant == 'q2_d':
-            Constants.q1_name = value
+            Constants.q2_date = value
         if constant == 'q4_n':
-            Constants.q1_name = value
+            Constants.q4_name = value
         if constant == 'q5_d':
-            Constants.q1_name = value
+            Constants.q5_date = value
         if constant == 'q8_d':
-            Constants.q1_name = value
+            Constants.q8_date = value
 
 
 class Data:
@@ -132,8 +132,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div([
     html.H1('F18 DMD'),
     html.Br(),
-    html.Div(children='Gleb Petrakov'),
-    html.Div(children='Ali Akhmetbek'),
+    html.Div(children='Gleb Petrakov, Ali Akhmetbek'),
     html.Br(),
     html.Div(children='Choose query from dropdown menu to acquire results'),
     html.Br(),
@@ -154,12 +153,13 @@ app.layout = html.Div([
         options=[{'label': 'Query 1 customer name', 'value': 'q1_n'}, {'label': 'Query 1 car color', 'value': 'q1_c'},
                  {'label': 'Query 1 plate format', 'value': 'q1_p'},
                  {'label': 'Query 2 date', 'value': 'q2_d'}, {'label': 'Query 4 customer name', 'value': 'q4_n'},
-                 {'label': 'Query 5 date', 'value': 'q5_d'}, {'label': 'Query 8 date', 'value': 'q8_d'}],
-        value='q1_n'
+                 {'label': 'Query 5 date', 'value': 'q5_d'}, {'label': 'Query 8 date', 'value': 'q8_d'}]
     ),
     html.Div(dcc.Input(id='query_data_input', type='text', placeholder="Value")),
     html.Button('Submit', id='query_data_submit'),
-    html.Div(id='new_value')
+    html.Div(id='new_value'),
+    html.Div(
+        children='Table does not update automatically, please, reselect query after entering new data and hitting submit button')
 ])
 
 
