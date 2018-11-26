@@ -45,23 +45,26 @@ select t.date
 from transactions as t,
      customers as c
 where name = 'Manuel Mazzara'
-  AND t.type = 'Charge';
+  AND t.type = 'Charge'
+  AND c.customer_id = t.customer_id;
 
 
 /* 3.5*/
 select average_distance, average_trip_duration
 from (select avg(sqrt(
-                   pow((cast(LEFT(location_pickup, 9) as double precision) -
-                        cast(LEFT(location_cur, 9) as double precision)),
-                       2)
-                     + pow((cast(RIGHT(location_pickup, 9) as double precision) -
-                            cast(RIGHT(location_cur, 9) as double precision)), 2))) as average_distance
+      pow((cast(LEFT(location_pickup, 9) as double precision) -
+           cast(LEFT(location_cur, 9) as double precision)),
+          2)
+      + pow((cast(RIGHT(location_pickup, 9) as double precision) -
+             cast(RIGHT(location_cur, 9) as double precision)), 2))) as average_distance
       from orders as o,
            cars as c
-      where c.car_id = o.car_id) as distance,
+      where date_from::date >= '2018-11-20'
+        and c.car_id = o.car_id) as distance,
      (select age(date_to, date_from) as average_trip_duration
       from orders
-      where date_to is not null
+      where date_from::date >= '2018-11-20'
+        and date_to is not null
       limit 1) as duration;
 
 
@@ -139,16 +142,17 @@ select coalesce(t1.car_id, t2.car_id) as car_id,
         order by date_from asc
         limit 1)                      as average_cost
 from (
-    (select car_id, sum(transactions.amount) as sum1
-     from transactions
-            join workshop_calendar c2 on transactions.transaction_id = c2.transaction_id
-     where type = 'Workshop'
-     group by car_id) as t1 full join
-        (select car_id, sum(transactions.amount) as sum2
-         from transactions
-                join charging_stations_usage u on transactions.transaction_id = u.transaction_id
-         where type = 'Charge'
-         group by car_id) as t2 on t1.car_id = t2.car_id)
+      (select car_id, sum(transactions.amount) as sum1
+       from transactions
+              join workshop_calendar c2 on transactions.transaction_id = c2.transaction_id
+       where type = 'Workshop'
+       group by car_id) as t1
+       full join
+       (select car_id, sum(transactions.amount) as sum2
+        from transactions
+               join charging_stations_usage u on transactions.transaction_id = u.transaction_id
+        where type = 'Charge'
+        group by car_id) as t2 on t1.car_id = t2.car_id)
 order by average_cost desc
 limit 1;
 
